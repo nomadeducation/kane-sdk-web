@@ -1,0 +1,10 @@
+version: "3"
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/home/node/app
+      - /home/node/app/node_modules
+    ports:
+      # debug test
+      - "9900:9900"
