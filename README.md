@@ -24,18 +24,6 @@ docker-compose up -d
 docker-compose exec web yarn test:debug
 ```
 
-You can **upgrade** the docker images with the following commands:
-```bash
-# - remove existing containers
-docker-compose down
-# - retrieve (and build) new image for the node stack
-docker-compose build --pull
-# - retrieve new images from dependencies (redis, postgres)
-docker-compose pull
-# - recreate the stack
-docker-compose up -d
-```
-
 ### Linting
 
 Made using `eslint`. To enforce rules to be applied, use `docker-compose exec web yarn lint:fix`.
