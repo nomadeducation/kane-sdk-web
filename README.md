@@ -43,15 +43,15 @@ docker-compose up
 You can also invoke the debugger (it'll wait on the first line while you're not attached):
 ```bash
 # look at the exposed port in `docker-compose.yml`
-docker-compose run web yarn test:debug
+docker-compose run sdk yarn test:debug
 ```
 
 ### Linting
 
-Made using `eslint`. To enforce rules to be applied, use `docker-compose run web yarn lint:fix`.
+Made using `eslint`. To enforce rules to be applied, use `docker-compose run sdk yarn lint:fix`.
 
 ### Packaging
 
-To add a new package, you **can** use docker using `docker-compose run web yarn add ...`
+To add a new package, you **can** use docker using `docker-compose run sdk yarn add ...`
 because it's using the right version of both `node` and `yarn`.
 Don't forget to rebuild the "web" image once you've added new packages using `docker-compose build`.
