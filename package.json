@@ -6,11 +6,11 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "webpack-cli",
-    "postinstall": "webpack-cli --env.production",
+    "prepublishOnly": "webpack-cli --env.production",
     "lint": "eslint --quiet --cache --format codeframe .",
     "lint:fix": "eslint --fix .",
-    "test": "mocha",
-    "test:debug": "mocha --inspect=0.0.0.0:9900 --inspect-brk"
+    "test": "./scripts/launch-tests.sh",
+    "test:debug": "./scripts/launch-tests.sh --inspect=0.0.0.0:9900 --inspect-brk"
   },
   "engines": {
     "node": "8.x"
