@@ -55,3 +55,11 @@ Made using `eslint`. To enforce rules to be applied, use `docker-compose run sdk
 To add a new package, you **can** use docker using `docker-compose run sdk yarn add ...`
 because it's using the right version of both `node` and `yarn`.
 Don't forget to rebuild the "web" image once you've added new packages using `docker-compose build`.
+
+### Publishing
+
+```bash
+# Note: we're using this command to publish new versions
+# the password is stored in 1password ("npm account")
+docker-compose run sdk yarn publish --no-git-tag-version
+```
