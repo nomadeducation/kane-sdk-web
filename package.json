@@ -5,6 +5,8 @@
   "license": "MIT",
   "main": "dist/main.js",
   "scripts": {
+    "build": "webpack-cli",
+    "postinstall": "webpack-cli --env.production",
     "lint": "eslint --quiet --cache --format codeframe .",
     "lint:fix": "eslint --fix .",
     "test": "mocha",
