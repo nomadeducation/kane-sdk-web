@@ -13,4 +13,4 @@ RUN chown -R node:node .
 USER node
 
 # Run the app
-CMD yarn start:dev
+CMD yarn test
