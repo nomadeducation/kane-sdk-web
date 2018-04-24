@@ -17,6 +17,12 @@ brew install caskroom/cask/docker
 
 ## Usage
 
+```js
+const ne = require("nomadeducation");
+```
+
+### Testing
+
 Launch the following command to test the SDK:
 ```bash
 # remove "-d" if you want to see the logs 
