@@ -1,0 +1,15 @@
+# see https://docs.travis-ci.com/user/languages/javascript-with-nodejs/
+language: node_js
+node_js:
+  - "lts/*"
+cache:
+  directories:
+    - node_modules
+branches:
+  only:
+    - master
+matrix:
+  fast_finish: true
+script:
+  - yarn test
+  - yarn ci-coverage
