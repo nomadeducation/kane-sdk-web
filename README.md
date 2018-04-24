@@ -1,4 +1,6 @@
-# Kane Web SDK
+# Web/Node.js SDK
+
+This package is used to call our latest API.
 
 ## Installation
 
