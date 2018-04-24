@@ -17,12 +17,6 @@ This package is using `docker` (and `docker-compose`) to run its tests so if you
 
 ## Usage
 
-Pull the package:
-```bash
-yarn add nomadeducation
-```
-
-And use it as follow:
 ```js
 const ne = require("nomadeducation");
 ```
