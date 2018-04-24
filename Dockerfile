@@ -6,8 +6,12 @@ WORKDIR /home/node/app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-# Allow the user to run CMD on the host side that will write content to the WORKDIR
-RUN chown -R node:node .
+# Install the yarn config file
+COPY files/.yarnrc /home/node
+
+# Allow the user to run CMD on the host side
+# that will write content to the HOMEDIR (thus including the WORKDIR)
+RUN chown -R node:node /home/node
 
 # Run the image as a non-root user
 USER node
