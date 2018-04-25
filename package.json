@@ -6,7 +6,7 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "webpack-cli",
-    "prepublishOnly": "webpack-cli --env.production",
+    "prepublishOnly": "yarn lint && yarn test && webpack-cli",
     "lint": "eslint --quiet --cache --format codeframe .",
     "lint:fix": "eslint --fix .",
     "test": "./scripts/launch-tests.sh",
