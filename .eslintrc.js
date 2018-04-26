@@ -7,8 +7,7 @@ module.exports = {
         "mocha": true
     },
     "parserOptions": {
-        "ecmaVersion": 2017,
-        "sourceType": "module"
+        "ecmaVersion": 2017
     },
     // recommended rules : http://eslint.org/docs/rules
     "extends": "eslint:recommended",
