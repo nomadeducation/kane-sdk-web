@@ -1,7 +1,15 @@
-import axios from "axios";
+const axios = require("axios");
 
-async function launch () {
-    return await axios.get("https://api.nomadeducation.com/v2");
+async function users () {
+    return await axios.get("https://api.nomadeducation.com/v2/users");
 }
 
-export default launch;
+const namespace = {
+    users
+};
+
+if (process.browser) {
+    window.nomad = namespace;
+} else {
+    module.exports = namespace;
+}
