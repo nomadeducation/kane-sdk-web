@@ -13,6 +13,9 @@ then
     # see https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
     CI=${CI:-false}
 
+    # prepare the env.
+    yarn build:test
+
     if [[ $CI == true ]] ;
     then
         # only execute tests if the linter result is good
