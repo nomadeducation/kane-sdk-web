@@ -1,4 +1,5 @@
 const webpack = require("webpack");
+const pkg = require("./package.json");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 
 const git = new GitRevisionPlugin({
@@ -6,12 +7,12 @@ const git = new GitRevisionPlugin({
 });
 
 module.exports = {
-    mode: "development",
+    mode: "production",
     plugins: [
         new webpack.DefinePlugin({
-            __PROD__: JSON.stringify(false),
-            __GATEWAY_URL__: JSON.stringify("http://localhost:3000/v2"),
-            __VERSION__: JSON.stringify("dev"),
+            __PROD__: JSON.stringify(true),
+            __GATEWAY_URL__: JSON.stringify("https://api.nomadeducation.com/v2"),
+            __VERSION__: JSON.stringify(pkg.version),
             __COMMITHASH__: JSON.stringify(git.commithash())
         })
     ]
