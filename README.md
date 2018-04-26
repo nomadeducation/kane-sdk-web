@@ -10,15 +10,25 @@ Execute the following in your favorite terminal:
 # yarn
 yarn add nomadeducation
 # npm
-npm install nomadeducation
+npm install --save nomadeducation
 ```
 
 This package is using `docker` (and `docker-compose`) to run its tests so if you want to contribute and do the same you can install it using the [official guide](https://docs.docker.com/compose/install/).
 
 ## Usage
 
+### Browser
+
+```html
+<!-- TODO -->
+```
+
+### Node.js
+
 ```js
-const ne = require("nomadeducation");
+const nomad = require("nomadeducation");
+
+// TODO
 ```
 
 ### Testing
