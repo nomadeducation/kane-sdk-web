@@ -1,15 +1,17 @@
 const axios = require("axios");
 
 async function users () {
-    return await axios.get("https://api.nomadeducation.com/v2/users");
+    return await axios.get(`${__GATEWAY_URL__}/users`);
 }
 
-const namespace = {
-    users
+function version () {
+    return {
+        version: __VERSION__,
+        commit: __COMMITHASH__
+    };
+}
+
+module.exports = {
+    users,
+    version
 };
-
-if (process.browser) {
-    window.nomad = namespace;
-} else {
-    module.exports = namespace;
-}
