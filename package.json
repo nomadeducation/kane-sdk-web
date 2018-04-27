@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "author": "Nomad Education",
   "license": "MIT",
-  "main": "dist/main.js",
+  "main": "dist/sdk.js",
   "scripts": {
     "build": "webpack-cli --config webpack.prod.js",
     "build:dev": "webpack-cli --config webpack.dev.js --progress --colors --watch",
