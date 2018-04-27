@@ -177,5 +177,11 @@ module.exports = {
         "prefer-const": "warn",
         "prefer-template": "warn",
         "radix": "error",
+    },
+    globals: {
+        "__PROD__": true,
+        "__GATEWAY_URL__": true,
+        "__VERSION__": true,
+        "__COMMITHASH__": true
     }
 };
