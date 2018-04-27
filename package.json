@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack-cli --config webpack.prod.js",
     "build:dev": "webpack-cli --config webpack.dev.js --progress --colors --watch",
-    "build:test": "webpack-cli --config webpack.dev.js",
+    "build:test": "webpack-cli --config webpack.test.js",
     "lint": "eslint --quiet --cache --format codeframe .",
     "lint:fix": "eslint --fix .",
     "test": "./scripts/launch-tests.sh",
