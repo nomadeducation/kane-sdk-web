@@ -1,3 +1,5 @@
 ### Notes
 
-Since the API responses are (mostly) stable, we'll make use of mocks during tests to simulate good (and other) responses.
+We are testing the **node** version of the SDK.
+
+Since the API responses are (mostly) stable, we'll **mock** requests during the test to simulate good (and other) responses.
