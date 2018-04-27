@@ -1,19 +1,15 @@
-const webpack = require("webpack");
-const pkg = require("./package.json");
-const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const config = require("./webpack.common");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const git = new GitRevisionPlugin({
-    commithashCommand: "rev-parse --short HEAD"
-});
+const cfg = config("production", "https://api.nomadeducation.com/v2");
 
-module.exports = {
-    mode: "production",
-    plugins: [
-        new webpack.DefinePlugin({
-            __PROD__: JSON.stringify(true),
-            __GATEWAY_URL__: JSON.stringify("https://api.nomadeducation.com/v2"),
-            __VERSION__: JSON.stringify(pkg.version),
-            __COMMITHASH__: JSON.stringify(git.commithash())
-        })
-    ]
-};
+// add extra config to prepare for the publication
+// the web build is the first element
+const webPlugins = cfg[0].plugins;
+webPlugins.push(
+    new CleanWebpackPlugin(["dist"]),
+    new HtmlWebpackPlugin()
+);
+
+module.exports = cfg;
