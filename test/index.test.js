@@ -1,4 +1,4 @@
-const nomad = require("dist/test/sdk.node");
+const nomad = require("dist/test/sdk.node")();
 const mockServer = require("mockttp").getLocal();
 const chai = require("chai");
 const expect = chai.expect;
