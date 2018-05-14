@@ -28,7 +28,7 @@ module.exports = function setCommonConfig (env, apiUrl) {
         __COMMITHASH__: JSON.stringify(git.commithash())
     });
     // do not create subfolder for the production build
-    const buildPath = path.resolve(__dirname, "dist", isProd ? "" : env);
+    const buildPath = path.resolve(__dirname, "..", "dist", isProd ? "" : env);
 
     const serverConfig = {
         mode,
