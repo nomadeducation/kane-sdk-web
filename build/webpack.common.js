@@ -1,14 +1,13 @@
 const path = require("path");
 const webpack = require("webpack");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
-const pkg = require("./package.json");
+const pkg = require("../package.json");
 
 const git = new GitRevisionPlugin({
     commithashCommand: "rev-parse --short HEAD"
 });
 
 const validEnv = [
-    "development",
     "test",
     "production"
 ];
