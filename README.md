@@ -48,7 +48,7 @@ docker-compose up
 You can also invoke the debugger (it'll wait on the first line while you're not attached):
 ```bash
 # look at the exposed port in `docker-compose.yml`
-docker-compose run sdk yarn test:debug
+docker-compose run -p 9900:9900 sdk yarn test:debug
 ```
 
 ### Linting
