@@ -2,3 +2,5 @@ node_modules/
 *.log
 .eslintcache
 dist/
+coverage/
+.nyc_output/

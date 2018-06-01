@@ -12,3 +12,4 @@ matrix:
   fast_finish: true
 script:
   - yarn test
+  - yarn test:coverage
