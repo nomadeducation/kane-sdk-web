@@ -1,5 +1,7 @@
 # Web/Node.js SDK
 [![Build Status](https://travis-ci.com/nomadeducation/nomadeducation-sdk-js.svg?branch=master)](https://travis-ci.com/nomadeducation/nomadeducation-sdk-js)
+[![Coverage Status](https://coveralls.io/repos/github/nomadeducation/nomadeducation-sdk-js/badge.svg?branch=master)](https://coveralls.io/github/nomadeducation/nomadeducation-sdk-js?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/github/nomadeducation/nomadeducation-sdk-js/badge.svg?targetFile=package.json)](https://snyk.io/test/github/nomadeducation/nomadeducation-sdk-js?targetFile=package.json)
 
 This package is used to call our latest API.
 
