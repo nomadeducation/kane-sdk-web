@@ -1,5 +1,5 @@
 # Web/Node.js SDK
-[![Build Status](https://travis-ci.org/nomadeducation/nomadeducation-sdk-js.svg?branch=master)](https://travis-ci.org/nomadeducation/nomadeducation-sdk-js)
+[![Build Status](https://travis-ci.com/nomadeducation/nomadeducation-sdk-js.svg?branch=master)](https://travis-ci.com/nomadeducation/nomadeducation-sdk-js)
 
 This package is used to call our latest API.
 
