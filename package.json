@@ -2,6 +2,7 @@
   "name": "nomadeducation",
   "version": "0.1.2",
   "author": "Nomad Education",
+  "description": "Javascript SDK to interact with the Nomad Education API",
   "keywords": [
     "sdk",
     "nomad",
