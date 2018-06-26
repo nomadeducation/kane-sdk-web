@@ -1,5 +1,6 @@
 const mergeOptions = require("merge-options");
-const identityAPI = require("./identity");
+const credentials = require("./credentials");
+const users = require("./users");
 
 const defaultOpts = {
     baseURL: __GATEWAY_URL__
@@ -20,12 +21,17 @@ function version () {
  */
 module.exports = function (userOpts = {}) {
     const opts = mergeOptions(defaultOpts, userOpts);
-    const identity = identityAPI(opts);
-
-    return {
-        register: identity.register,
-        login: identity.login,
-        logout: identity.logout,
+    let methods = {
         version
     };
+    const namespaces = [
+        credentials(opts),
+        users(opts)
+    ];
+
+    for (const ns of namespaces) {
+        methods = Object.assign({}, methods, ns);
+    }
+
+    return methods;
 };
