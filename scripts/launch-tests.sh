@@ -19,8 +19,8 @@ then
     if [[ $CI == true ]] ;
     then
         # only execute tests if the linter result is good
-        yarn lint && mocha --exit
+        yarn lint && mocha
     else
-        mocha "$@" --exit
+        mocha "$@"
     fi
 fi
