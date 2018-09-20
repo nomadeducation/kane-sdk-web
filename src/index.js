@@ -1,4 +1,3 @@
-const mergeOptions = require("merge-options");
 const credentials = require("./credentials");
 const users = require("./users");
 
@@ -19,8 +18,8 @@ function version () {
  * @param {Object} userOpts
  * @returns {Object} the namespaced SDK
  */
-module.exports = function (userOpts = {}) {
-    const opts = mergeOptions(defaultOpts, userOpts);
+module.exports = function nomad (userOpts = {}) {
+    const opts = Object.assign({}, defaultOpts, userOpts);
     let methods = {
         version
     };
