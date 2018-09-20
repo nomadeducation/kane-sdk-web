@@ -6,7 +6,8 @@
   "keywords": [
     "sdk",
     "nomad",
-    "education"
+    "education",
+    "api"
   ],
   "license": "MIT",
   "main": "dist/sdk.js",
