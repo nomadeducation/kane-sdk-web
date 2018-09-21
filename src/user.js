@@ -1,11 +1,20 @@
 /**
+ * Utility function to retrieve the number of found users
+ *
+ * @param {String} contentRangeHeader
+ * @returns {Number}
+ */
+function extractCount (contentRangeHeader) {
+    const countStr = contentRangeHeader.split("/");
+    return parseInt(countStr[1], 10);
+}
+
+/**
  * @returns {Promise<*>}
  */
 exports.metadata = async function () {
     const res = await this.api.head("/users");
-    const range = res.headers["content-range"];
-    const countStr = range.split("/");
-    const count = parseInt(countStr[1], 10);
+    const count = extractCount(res.headers["content-range"]);
 
     return {count};
 };
@@ -38,10 +47,20 @@ exports.get = async function (id) {
 };
 
 /**
+ * @param {Number} offset
+ * @param {Number} limit
  * @returns {Promise<*>}
  */
-exports.list = async function () {
-    const res = await this.api.get("/users");
+exports.list = async function (offset = 0, limit = 100) {
+    const lastElement = offset + (limit - 1);
+    const res = await this.api.get("/users", {
+        headers: {
+            "Range": `items=${offset}-${lastElement}`
+        }
+    });
+
+    // XXX extract the total of found users
+
     return res.data;
 };
 
@@ -51,7 +70,7 @@ exports.list = async function () {
  */
 exports.update = async function (user = {}) {
     const res = await this.api.patch("/users", user);
-    return res.data;
+    return res.status === 200;
 };
 
 /**
@@ -60,7 +79,7 @@ exports.update = async function (user = {}) {
  */
 exports.enable = async function (id) {
     const res = await this.api.patch(`/users/${id}/enable`);
-    return res.data;
+    return res.status === 200;
 };
 
 /**
@@ -69,7 +88,7 @@ exports.enable = async function (id) {
  */
 exports.disable = async function (id) {
     const res = await this.api.patch(`/users/${id}/disable`);
-    return res.data;
+    return res.status === 200;
 };
 
 /**
@@ -78,5 +97,5 @@ exports.disable = async function (id) {
  */
 exports.remove = async function (id) {
     const res = await this.api.delete("/users", id);
-    return res.data;
+    return res.status === 200;
 };
