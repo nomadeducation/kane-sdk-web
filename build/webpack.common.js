@@ -46,7 +46,7 @@ module.exports = function setCommonConfig (env, apiUrl) {
         output: {
             path: buildPath,
             filename: "sdk.js",
-            library: "nomad",
+            library: "Nomad",
             libraryTarget: "umd"
         },
         plugins: [globalVars]
