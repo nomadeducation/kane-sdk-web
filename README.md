@@ -50,7 +50,7 @@ const status = Nomad.health();
 
 ### Reference
 
-Check the [wiki page](wiki/SDK-Reference) to get the entire reference.
+Check the [wiki page](../../wiki/SDK-Reference) to get the entire reference.
 
 ### Testing
 
