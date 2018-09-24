@@ -37,8 +37,12 @@ async function publicMethods () {
     // Beware that this must be the first action before calling any other methods
     // you can extend your session up to 5 days if you pass `true` as the third parameter
     await client.login("myUsername", "myPassword", extendedSession = true);
+
     // now you can consume the API
     // the library will throw errors if you don't have enough permissions
+
+    // once you've finished, you can explicitely logged out
+    const isLoggedOut = await client.logout();
 }
 
 // the library also exposes utility functions:
