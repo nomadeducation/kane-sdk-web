@@ -16,7 +16,10 @@ exports.metadata = async function () {
     const res = await this.api.head("/users");
     const count = extractCount(res.headers["content-range"]);
 
-    return {count};
+    return {
+        maxItemsPerPage: 100,
+        count
+    };
 };
 
 /**
