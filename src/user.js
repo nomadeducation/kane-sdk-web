@@ -77,6 +77,15 @@ exports.update = async function (user = {}) {
 };
 
 /**
+ * @param {Array<Object>} values
+ * @returns {Promise<*>}
+ */
+exports.import = async function (values) {
+    const res = await this.api.post("/users/import", values);
+    return res.status === 200;
+};
+
+/**
  * @param {String} id
  * @returns {Promise<*>}
  */
@@ -100,5 +109,14 @@ exports.disable = async function (id) {
  */
 exports.remove = async function (id) {
     const res = await this.api.delete("/users", id);
+    return res.status === 200;
+};
+
+/**
+ * @param {Array<Object>} values
+ * @returns {Promise<*>}
+ */
+exports.bulkDelete = async function (values) {
+    const res = await this.api.post("/users/bulk-delete", values);
     return res.status === 200;
 };
