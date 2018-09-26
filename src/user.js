@@ -78,10 +78,15 @@ exports.update = async function (user = {}) {
 
 /**
  * @param {Array<Object>} values
+ * @param {String} idKey this will indicate what property to use when updating a previously imported value
  * @returns {Promise<*>}
  */
-exports.import = async function (values) {
-    const res = await this.api.post("/users/import", values);
+exports.import = async function (values, idKey) {
+    const res = await this.api.post("/users/import", values, {
+        params: {
+            id_key: idKey
+        }
+    });
     return res.status === 200;
 };
 
@@ -113,7 +118,7 @@ exports.remove = async function (id) {
 };
 
 /**
- * @param {Array<Object>} values
+ * @param {Array<String>} values
  * @returns {Promise<*>}
  */
 exports.bulkDelete = async function (values) {
