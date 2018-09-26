@@ -11,6 +11,9 @@
   ],
   "license": "MIT",
   "main": "dist/sdk.js",
+  "files": [
+    "dist/sdk.node.js"
+  ],
   "scripts": {
     "build": "webpack-cli --config build/webpack.prod.js",
     "build:test": "webpack-cli --config build/webpack.test.js",
