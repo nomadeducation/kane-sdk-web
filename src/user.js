@@ -77,11 +77,12 @@ exports.update = async function (user = {}) {
 };
 
 /**
+ * Import external users into our system.
  * Make sure that you've identified each of your item with an appropriate identifier
  * stored in a "imported_id" key
  *
  * @param {Array<Object>} values
- * @returns {Promise<*>}
+ * @returns {Promise<*>} Inserted users infos will be returned
  */
 exports.import = async function (values) {
     const res = await this.api.post("/users/import", values);
