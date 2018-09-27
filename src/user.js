@@ -77,16 +77,14 @@ exports.update = async function (user = {}) {
 };
 
 /**
+ * Make sure that you've identified each of your item with an appropriate identifier
+ * stored in a "imported_id" key
+ *
  * @param {Array<Object>} values
- * @param {String} idKey this will indicate what property to use when updating a previously imported value
  * @returns {Promise<*>}
  */
-exports.import = async function (values, idKey) {
-    const res = await this.api.post("/users/import", values, {
-        params: {
-            id_key: idKey
-        }
-    });
+exports.import = async function (values) {
+    const res = await this.api.post("/users/import", values);
     return res.status === 200;
 };
 
