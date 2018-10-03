@@ -29,7 +29,9 @@ const client = new Nomad({
     base_url: "https://api.nomadeducation.com/v2",
     // you can (optionally) use your own API key.
     // Note that you won't have to log into our system then
-    api_key: "d6921bc91cd2470e6a265974d4d9c47a"
+    api_key: "d6921bc91cd2470e6a265974d4d9c47a",
+    // sometimes your request can take more time than estimated
+    disable_timeout: true
 });
 
 async function publicMethods () {
