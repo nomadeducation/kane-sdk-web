@@ -63,9 +63,6 @@ class Nomad {
                 // make sure that we always sending JSON payloads
                 "Content-Type": "application/json"
             },
-            // init the payload with an empty object
-            // to make sure axios is configure to send/recv JSON
-            data: {},
             // consider 4xx errors as valid responses
             validateStatus: function (status) {
                 return status >= 200 && status < 500;
