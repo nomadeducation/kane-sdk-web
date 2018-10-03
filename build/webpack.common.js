@@ -32,11 +32,14 @@ module.exports = function setCommonConfig (env, apiUrl) {
 
     const serverConfig = {
         mode,
+        optimization: {
+            minimize: false
+        },
         target: "node",
         output: {
             path: buildPath,
             filename: "sdk.node.js",
-            libraryTarget: "umd"
+            libraryTarget: "commonjs2"
         },
         plugins: [globalVars]
     };
