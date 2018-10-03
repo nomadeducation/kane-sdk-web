@@ -21,7 +21,6 @@ module.exports = function setCommonConfig (env, apiUrl) {
     // there's no "test" mode in webpack
     const mode = isProd ? env : "development";
     const globalVars = new webpack.DefinePlugin({
-        "process.env.NODE_ENV": JSON.stringify(env),
         __PROD__: JSON.stringify(isProd),
         __GATEWAY_URL__: JSON.stringify(apiUrl),
         __VERSION__: JSON.stringify(isProd ? pkg.version : env),
@@ -33,7 +32,8 @@ module.exports = function setCommonConfig (env, apiUrl) {
     const serverConfig = {
         mode,
         optimization: {
-            minimize: false
+            minimize: false,
+            nodeEnv: false
         },
         target: "node",
         output: {
