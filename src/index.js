@@ -7,24 +7,6 @@ const namespaces = [
 // utility variables
 const sec = 1000; // in ms
 const MB = 1000 * 1000; // in bytes
-const apiKeyLength = 32;
-const minUsernameLength = 3;
-const minPasswordLength = 6;
-
-/**
- * @param {String} value
- * @param {Number} minLength must above zero
- * @param {Boolean} exactMatch
- */
-function checkMinLength (value, minLength, exactMatch = false) {
-    const minLen = Math.max(minLength, 1);
-
-    if (exactMatch && value && value.length !== minLen) {
-        throw new Error(`the value must be exactly ${minLen} characters long!`);
-    } else if (value && value.length < minLen) {
-        throw new Error(`the value must be at least ${minLen} characters long!`);
-    }
-}
 
 /**
  * SDK Options.
@@ -53,9 +35,6 @@ class Nomad {
     constructor (userOpts) {
         this.opts = Object.assign({}, defaultOpts, userOpts);
         const {api_key: apiKey} = this.opts;
-
-        // make sure that the API key looks okay
-        checkMinLength(apiKey, apiKeyLength);
 
         // our APIs are quite standardized so we can make some assertions like
         // the domain name or the port value
@@ -104,10 +83,6 @@ class Nomad {
      * @throws {Error} if the given credentials aren't valid
      */
     async login (username, password, extendedSession = false) {
-        // make sure that the credentials look okay
-        checkMinLength(username, minUsernameLength);
-        checkMinLength(password, minPasswordLength);
-
         return this.api.post("/login", {
             username,
             password,
