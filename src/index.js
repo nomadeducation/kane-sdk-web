@@ -34,6 +34,7 @@ function checkMinLength (value, minLength, exactMatch = false) {
  * @typedef {Object} Options
  * @property {String} base_url
  * @property {String} [api_key]
+ * @property {Boolean} [disable_timeout]
  */
 const defaultOpts = {
     base_url: __GATEWAY_URL__,
@@ -69,7 +70,7 @@ class Nomad {
                 return status >= 200 && status < 500;
             },
             // increase the allowed timeout
-            timeout: this.opts.disable_timeout || process.env.NODE_ENV !== "production" ? 0 : 10 * sec,
+            timeout: (this.opts.disable_timeout || process.env.NODE_ENV !== "production") ? 0 : 10 * sec,
             // increase the allowed response size
             maxContentLength: 10 * MB
         };
