@@ -52,7 +52,7 @@ class Nomad {
             timeout: (this.opts.disable_timeout || process.env.NODE_ENV !== "production") ? 0 : 3 * sec,
             // increase the allowed response size
             maxContentLength: 10 * MB,
-            // send the credentials (such as the cookie kane_sid) in the requests
+            // send the credentials (such as the cookie) in the requests
             withCredentials: true
         };
 
