@@ -51,7 +51,9 @@ class Nomad {
             // increase the allowed timeout
             timeout: (this.opts.disable_timeout || process.env.NODE_ENV !== "production") ? 0 : 3 * sec,
             // increase the allowed response size
-            maxContentLength: 10 * MB
+            maxContentLength: 10 * MB,
+            // send the credentials (such as the cookie kane_sid) in the requests
+            withCredentials: true
         };
 
         // use the API key if defined and skip the login part
