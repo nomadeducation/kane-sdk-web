@@ -13,5 +13,4 @@ matrix:
 before_install:
   - openssl aes-256-cbc -K $encrypted_b148fb5d3428_key -iv $encrypted_b148fb5d3428_iv -in test/account.json.enc -out test/account.json -d
 script:
-  - yarn test
-  - yarn test:coverage
+  - yarn test:ci
