@@ -90,11 +90,12 @@ class Nomad {
      * @throws {Error} if the given credentials aren't valid
      */
     async login (username, password, extendedSession = false) {
-        return this.api.post("/login", {
+        const res = await this.api.post("/login", {
             username,
             password,
             extended_session: extendedSession
         });
+        return res.status === 200;
     }
 
     /**
