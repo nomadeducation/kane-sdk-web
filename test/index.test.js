@@ -1,14 +1,10 @@
-const Nomad = require("dist/test/sdk.node");
-const mockServer = require("mockttp").getLocal();
+const Nomad = require("dist/test/node");
+const account = require("./account");
 const faker = require("faker/locale/fr");
 const chai = require("chai");
 const expect = chai.expect;
 
 describe("Nomad Client", function () {
-    // use the same port as defined in webpack.test.js
-    beforeEach(() => mockServer.start(3333));
-    afterEach(() => mockServer.stop());
-
     it("should retrieve the version", function () {
         const version = Nomad.version();
 
@@ -19,41 +15,24 @@ describe("Nomad Client", function () {
     });
 
     it("should monitor the API status", async function () {
-        const responseObj = {
-            version: "2.0.0",
-            internal_apis: [
-                {
-                    name: "identity",
-                    status: "up"
-                }
-            ]
-        };
-
-        await mockServer.get("/v2/health").thenReply(200, JSON.stringify(responseObj));
+        const expectedKeys = [
+            "version",
+            "cache",
+            "internal_apis"
+        ];
 
         const status = await Nomad.health();
 
-        expect(status).to.be.an("object").to.be.deep.equal(responseObj);
+        expect(status).to.be.an("object").to.have.all.keys(...expectedKeys);
     });
 
     it("should register one user", async function () {
         const fakeUser = {
-            email: faker.internet.email(),
-            username: faker.internet.userName(),
+            email: `dummy.user+${faker.random.uuid()}@nomadeducation.fr`,
+            password: faker.internet.password(),
             first_name: faker.name.firstName(),
             last_name: faker.name.lastName()
         };
-
-        const responseObj = Object.assign(
-            {
-                id: "676a14fc-5b67-4462-a1e5-dd4e3208b593",
-                created_at: faker.date.recent(),
-                updated_at: faker.date.recent()
-            },
-            fakeUser
-        );
-
-        await mockServer.post("/v2/register").thenReply(200, JSON.stringify(responseObj));
 
         const newUser = await Nomad.register(fakeUser);
 
@@ -66,50 +45,103 @@ describe("Nomad Client", function () {
             "created_at",
             "updated_at"
         );
+
+        // remove the dummy user afterwards
+        const apiClient = new Nomad({api_key: account.apiKey});
+        const removed = await apiClient.user.remove(newUser.id);
+        expect(removed).to.be.a("boolean").that.is.true;
     });
 
     describe("methods as a logged user", function () {
         const client = new Nomad();
+        let newUser = {};
 
-        beforeEach(async () => {
-            await mockServer.post("/v2/login").thenReply(200, "");
-            await client.login("ultra-vomit", "0xDEADBEEF");
-        });
-        afterEach(async () => {
-            await mockServer.get("/v2/logout").thenReply(200, "");
-
-            await client.logout();
+        before(async () => {
+            const isConnected = await client.login(account.username, account.password);
+            expect(isConnected).to.be.true;
         });
 
-        it("should fetch user metadata", async function () {
-            const count = 1337;
+        after(async () => {
+            const loggedOut = await client.logout();
+            expect(loggedOut).to.be.true;
+        });
 
-            await mockServer.head("/v2/users").thenReply(200, "", {"Content-Range": `items */${count}`});
+        it("should retrieve my own infos", async function () {
+            const ownInfos = await client.me();
 
-            const userCount = await client.user.metadata();
+            expect(ownInfos).to.be.an("object").that.have.any.keys(
+                "id",
+                "token",
+                "roles",
+                "permissions",
+                "created_at",
+                "updated_at"
+            );
+        });
 
-            expect(userCount).to.be.an("object").to.have.property("count").that.is.equal(count);
+        it("should create a new user", async function () {
+            const fakeUser = {
+                email: `dummy.user+${faker.random.uuid()}@nomadeducation.fr`,
+                password: faker.internet.password(),
+                first_name: faker.name.firstName(),
+                last_name: faker.name.lastName()
+            };
+
+            newUser = await client.user.create(fakeUser);
+
+            expect(newUser).to.be.an("object").that.have.any.keys(
+                "id",
+                "created_at",
+                "updated_at"
+            );
+        });
+
+        it("should test the existence of a new user", async function () {
+            const doesExists = await client.user.exists(newUser.id);
+
+            expect(doesExists).to.be.a("boolean").that.is.true;
+        });
+
+        it("should update the created user", async function () {
+            const fakeInfos = {
+                first_name: faker.name.firstName(),
+                last_name: faker.name.lastName()
+            };
+
+            const updated = await client.user.update(newUser.id, fakeInfos);
+
+            expect(updated).to.be.a("boolean").that.is.true;
+        });
+
+        it("should disable the created user", async function () {
+            const disabled = await client.user.disable(newUser.id);
+
+            expect(disabled).to.be.a("boolean").that.is.true;
+        });
+
+        it("should delete the created user", async function () {
+            const removed = await client.user.remove(newUser.id);
+
+            expect(removed).to.be.a("boolean").that.is.true;
+        });
+
+        it("should check that the user doesn't exist", async function () {
+            const userId = "42";
+            const doesExists = await client.user.exists(userId);
+
+            expect(doesExists).to.be.a("boolean").that.is.false;
         });
     });
 
     describe("methods as a logged user using the API key", function () {
         // XXX no need to login before
-        const apiKey = "ec0e4492d8ffb1398af38ce02420f4fc";
-        const header = {
-            "Authorization": `Bearer ${apiKey}`
-        };
+        const {apiKey} = account;
 
-        it("should fetch user metadata", async function () {
-            const count = 42;
+        it("should check that there are some users still there!", async function () {
+            const apiClient = new Nomad({api_key: apiKey});
+            const {count} = await apiClient.user.metadata();
 
-            await mockServer.head("/v2/users")
-            .withHeaders(header)
-            .thenReply(200, "", {"Content-Range": `items */${count}`});
-
-            const client = new Nomad({api_key: "ec0e4492d8ffb1398af38ce02420f4fc"});
-            const userCount = await client.user.metadata();
-
-            expect(userCount).to.be.an("object").to.have.property("count").that.is.equal(count);
+            expect(count).to.be.a("number").that.is.at.least(1);
         });
     });
 });
