@@ -1,4 +1,5 @@
 const path = require("path");
+const {readdirSync} = require("fs");
 const webpack = require("webpack");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const pkg = require("../package.json");
@@ -20,14 +21,30 @@ module.exports = function setCommonConfig (env, apiUrl) {
     const isProd = env === "production";
     // there's no "test" mode in webpack
     const mode = isProd ? env : "development";
+
+    // fetch all namespaces
+    // do not create subfolder for the production build
+    const srcPath = path.resolve(__dirname, "..", "src");
+    const files = readdirSync(srcPath);
+    const namespaces = [];
+
+    for (const file of files) {
+        if (file !== "index.js") {
+            const {name} = path.parse(file);
+            namespaces.push(name);
+        }
+    }
+
+    // select the build path based on the env
+    const buildPath = path.resolve(__dirname, "..", "dist", isProd ? "" : env);
+
     const globalVars = new webpack.DefinePlugin({
         __PROD__: JSON.stringify(isProd),
         __GATEWAY_URL__: JSON.stringify(apiUrl),
+        __NS__: JSON.stringify(namespaces),
         __VERSION__: JSON.stringify(isProd ? pkg.version : env),
         __COMMITHASH__: JSON.stringify(git.commithash())
     });
-    // do not create subfolder for the production build
-    const buildPath = path.resolve(__dirname, "..", "dist", isProd ? "" : env);
 
     const serverConfig = {
         mode,
@@ -38,7 +55,7 @@ module.exports = function setCommonConfig (env, apiUrl) {
         target: "node",
         output: {
             path: buildPath,
-            filename: "sdk.node.js",
+            filename: "node.js",
             libraryTarget: "commonjs2"
         },
         plugins: [globalVars]
@@ -48,7 +65,7 @@ module.exports = function setCommonConfig (env, apiUrl) {
         mode,
         output: {
             path: buildPath,
-            filename: "sdk.js",
+            filename: "web.js",
             library: "Nomad",
             libraryTarget: "umd"
         },

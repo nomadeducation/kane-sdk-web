@@ -68,7 +68,9 @@ Prerequisites: you'll have to add your API key (Travis CI will use the "test" ac
 echo '{"username": "test", "password": "TEST_PW", "apiKey": "TEST_TOKEN"}' > test/account.json
 ```
 
-Launch the following commands to test the SDK:
+Do **not** forget to launch Kane APIs locally before testing!
+
+Then execute the following commands to test the SDK:
 ```bash
 yarn install --frozen-lockfile
 yarn test
