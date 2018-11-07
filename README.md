@@ -23,6 +23,9 @@ The SDK is exporting its object `Nomad` using the UMD format. In the browser con
 
 ```js
 const Nomad = require("nomadeducation");
+// even though this SDK is primarily targeting the browser
+// you can also use it on Node.js by using the following line instead
+// const Nomad = require("nomadeducation/dist/node");
 
 const client = new Nomad({
     // the client uses our latest endpoint by default
@@ -59,6 +62,11 @@ const status = Nomad.health();
 Check the [documentation](https://docs.nomadeducation.com/?language=JavaScript) to get the entire reference.
 
 ### Testing
+
+Prerequisites: you'll have to add your API key (Travis CI will use the "test" account):
+```bash
+echo '{"username": "test", "password": "TEST_PW", "apiKey": "TEST_TOKEN"}' > test/account.json
+```
 
 Launch the following commands to test the SDK:
 ```bash
