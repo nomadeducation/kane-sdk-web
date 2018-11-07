@@ -35,8 +35,7 @@ module.exports = function setCommonConfig (env, apiUrl) {
         }
     }
 
-    // select the build path based on the env
-    const buildPath = path.resolve(__dirname, "..", "dist", isProd ? "" : env);
+    const buildPath = path.resolve(__dirname, "..", "dist");
 
     const globalVars = new webpack.DefinePlugin({
         __PROD__: JSON.stringify(isProd),

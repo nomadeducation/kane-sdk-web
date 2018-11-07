@@ -1,4 +1,4 @@
-const Nomad = require("dist/test/node");
+const Nomad = require("dist/node");
 const account = require("./account");
 const faker = require("faker/locale/fr");
 const chai = require("chai");
