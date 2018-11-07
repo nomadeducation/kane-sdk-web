@@ -1,8 +1,6 @@
 const axios = require("axios");
 
-const namespaces = [
-    "user"
-];
+const namespaces = __NS__;
 
 // utility variables
 const sec = 1000; // in ms
@@ -34,7 +32,6 @@ class Nomad {
      */
     constructor (userOpts) {
         this.opts = Object.assign({}, defaultOpts, userOpts);
-        const {api_key: apiKey} = this.opts;
 
         // our APIs are quite standardized so we can make some assertions like
         // the domain name or the port value
@@ -56,21 +53,29 @@ class Nomad {
             withCredentials: true
         };
 
-        // use the API key if defined and skip the login part
-        if (apiKey) {
-            axiosOpts.headers["Authorization"] = `Bearer ${apiKey}`;
-        }
-
         this.api = axios.create(axiosOpts);
+
+        // use the API key if defined and skip the login part
+        // this was put in the request interceptor as instance options
+        // are changing global options (see https://github.com/axios/axios/issues/385)
+        this.api.interceptors.request.use(request => {
+            const {api_key: apiKey} = this.opts;
+
+            if (apiKey) {
+                request.headers["Authorization"] = `Bearer ${apiKey}`;
+            }
+
+            return request;
+        });
 
         // inject namespaced methods
         for (const ns of namespaces) {
-            Nomad.prototype[ns] = {};
+            this[ns] = {};
             const methods = require(`./${ns}`);
             const methodMap = Object.entries(methods);
 
             for (const [name, method] of methodMap) {
-                Nomad.prototype[ns][name] = method.bind(this);
+                this[ns][name] = method.bind(this);
             }
         }
     }
