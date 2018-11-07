@@ -27,7 +27,7 @@ exports.metadata = async function () {
  * @returns {Promise<*>}
  */
 exports.exists = async function (id) {
-    const res = await this.api.head("/users", id);
+    const res = await this.api.head(`/users/${id}`);
     return res.status === 200;
 };
 
@@ -45,7 +45,7 @@ exports.create = async function (user = {}) {
  * @returns {Promise<*>}
  */
 exports.get = async function (id) {
-    const res = await this.api.get("/users", id);
+    const res = await this.api.get(`/users/${id}`);
     return res.data;
 };
 
@@ -68,11 +68,12 @@ exports.list = async function (offset = 0, limit = 100) {
 };
 
 /**
- * @param {Object} user
+ * @param {String} id
+ * @param {Object} infos
  * @returns {Promise<*>}
  */
-exports.update = async function (user = {}) {
-    const res = await this.api.patch("/users", user);
+exports.update = async function (id, infos = {}) {
+    const res = await this.api.patch(`/users/${id}`, infos);
     return res.status === 200;
 };
 
@@ -112,7 +113,7 @@ exports.disable = async function (id) {
  * @returns {Promise<*>}
  */
 exports.remove = async function (id) {
-    const res = await this.api.delete("/users", id);
+    const res = await this.api.delete(`/users/${id}`);
     return res.status === 200;
 };
 
