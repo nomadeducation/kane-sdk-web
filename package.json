@@ -10,9 +10,9 @@
     "api"
   ],
   "license": "MIT",
-  "main": "dist/sdk.js",
+  "main": "dist/web.js",
   "files": [
-    "dist/sdk.node.js"
+    "dist/node.js"
   ],
   "scripts": {
     "build": "webpack-cli --config build/webpack.prod.js",
