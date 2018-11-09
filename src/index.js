@@ -1,8 +1,10 @@
 const axios = require("axios");
 const {default: axiosCookieJarSupport} = require("axios-cookiejar-support");
 
-// axios can now handle cookies
-axiosCookieJarSupport(axios);
+// axios can now handle cookies (Node.js only)
+if (axiosCookieJarSupport) {
+    axiosCookieJarSupport(axios);
+}
 
 const namespaces = __NS__;
 // utility variables
@@ -52,7 +54,7 @@ class Nomad {
             timeout: (this.opts.disable_timeout || process.env.NODE_ENV !== "production") ? 0 : 3 * sec,
             // increase the allowed response size
             maxContentLength: 10 * MB,
-            // enable the cookie support on Node.js
+            // enable the cookie support (Node.js only)
             jar: true,
             // send the credentials (such as the cookie) in the requests
             withCredentials: true
