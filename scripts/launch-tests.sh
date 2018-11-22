@@ -1,25 +1,29 @@
 #!/usr/bin/env bash
 
-# bear in mind that this script has been conceived for a dockerized env.
-
 set -ue
 
 # only execute if node is present
 if command -v node >/dev/null 2>&1 ;
 then
-    export NODE_ENV=test
     export NODE_PATH=.
+
+    # produce a test/prod build base on "NODE_ENV"
+    if [[ $NODE_ENV == "test" ]] ;
+    then
+        yarn build:test
+    else
+        yarn build
+    fi
+
     # define if we are in the automated tests env.
     # see https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
     CI=${CI:-false}
 
     if [[ $CI == true ]] ;
     then
-        yarn build
         # only execute tests if the linter result is good
         yarn lint && mocha
     else
-        yarn build:test
         mocha "$@"
     fi
 fi

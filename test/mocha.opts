@@ -1,5 +1,6 @@
 --recursive
 --colors
 --reporter spec
+--slow 500
 --timeout 5000
 --exit

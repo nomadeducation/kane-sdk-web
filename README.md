@@ -76,9 +76,17 @@ yarn install --frozen-lockfile
 yarn test
 ```
 
-You can also invoke the debugger (it'll wait on the first line while you're not attached):
+This will launch tests directly on the production API. If you want to launch your tests locally, you can use:
 ```bash
+yarn test:dev
+```
+
+You can also invoke the debugger. It'll wait on the first line while you're not attached:
+```bash
+# you can debug either using the production...
 yarn test:debug
+# ...or locally!
+yarn test:dev:debug
 ```
 
 ### Linting

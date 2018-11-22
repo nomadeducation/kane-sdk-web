@@ -23,7 +23,7 @@ describe("Nomad Client", function () {
 
         const status = await Nomad.health();
 
-        expect(status).to.be.an("object").to.have.all.keys(...expectedKeys);
+        expect(status).to.be.an("object").to.include.keys(...expectedKeys);
     });
 
     it("should register one user", async function () {
