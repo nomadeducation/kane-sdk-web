@@ -11,6 +11,7 @@ module.exports = {
         "__GATEWAY_URL__": true,
         "__NS__": true,
         "__VERSION__": true,
-        "__COMMITHASH__": true
+        "__COMMITHASH__": true,
+        "__TARGET__": true
     }
 };

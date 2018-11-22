@@ -1,8 +1,9 @@
 const axios = require("axios");
 const {default: axiosCookieJarSupport} = require("axios-cookiejar-support");
+const Agent = require("agentkeepalive");
 
 // axios can now handle cookies (Node.js only)
-if (axiosCookieJarSupport) {
+if (__TARGET__ === "node") {
     axiosCookieJarSupport(axios);
 }
 
@@ -59,6 +60,12 @@ class Nomad {
             // send the credentials (such as the cookie) in the requests
             withCredentials: true
         };
+
+        // use "keepAlive" TCP connections
+        if (__TARGET__ === "node") {
+            axiosOpts.httpAgent = new Agent();
+            axiosOpts.httpsAgent = new Agent.HttpsAgent();
+        }
 
         this.api = axios.create(axiosOpts);
 

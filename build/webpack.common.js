@@ -37,13 +37,13 @@ module.exports = function setCommonConfig (env, apiUrl) {
 
     const buildPath = path.resolve(__dirname, "..", "dist");
 
-    const globalVars = new webpack.DefinePlugin({
+    const globalVars = {
         __PROD__: JSON.stringify(isProd),
         __GATEWAY_URL__: JSON.stringify(apiUrl),
         __NS__: JSON.stringify(namespaces),
         __VERSION__: JSON.stringify(isProd ? pkg.version : env),
         __COMMITHASH__: JSON.stringify(git.commithash())
-    });
+    };
 
     const serverConfig = {
         mode,
@@ -57,7 +57,13 @@ module.exports = function setCommonConfig (env, apiUrl) {
             filename: "node.js",
             libraryTarget: "commonjs2"
         },
-        plugins: [globalVars]
+        plugins: [
+            new webpack.DefinePlugin(
+                Object.assign({}, globalVars, {
+                    __TARGET__: JSON.stringify("node")
+                })
+            )
+        ]
     };
 
     const clientConfig = {
@@ -68,7 +74,13 @@ module.exports = function setCommonConfig (env, apiUrl) {
             library: "Nomad",
             libraryTarget: "umd"
         },
-        plugins: [globalVars]
+        plugins: [
+            new webpack.DefinePlugin(
+                Object.assign({}, globalVars, {
+                    __TARGET__: JSON.stringify("browser")
+                })
+            )
+        ]
     };
 
     return [
