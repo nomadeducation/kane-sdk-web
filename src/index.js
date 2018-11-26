@@ -21,11 +21,13 @@ const MB = 1000 * 1000; // in bytes
  * @property {String} base_url
  * @property {String} [api_key]
  * @property {Boolean} [disable_timeout]
+ * @property {Number} [latest_saved_request_ids] tell how much request ids is stored on the client for debugging purposes
  */
 const defaultOpts = {
     base_url: __GATEWAY_URL__,
     api_key: "",
-    disable_timeout: false
+    disable_timeout: false,
+    latest_saved_requests: 10
 };
 
 class Nomad {
@@ -82,6 +84,31 @@ class Nomad {
             return request;
         });
 
+        /**
+         * Store the request metadata made by the client
+         *
+         * @typedef {Object} RequestMetadata
+         * @property {String} id the request identifier
+         * @property {Number} remaining the number of requests one user could made before being rejected
+         * @property {Date} when store the local datetime (could be handy when comparing against server time)
+         */
+        this.lastRequests = [];
+
+        this.api.interceptors.response.use(response => {
+            // only keep an handful number of requests by pushing out the oldest one
+            if (this.lastRequests.length > this.opts.latest_saved_requests) {
+                this.lastRequests.shift();
+            }
+
+            this.lastRequests.push({
+                id: response.headers["x-request-id"],
+                remaining: Number(response.headers["x-ratelimit-remaining"]),
+                when: new Date()
+            });
+
+            return response;
+        });
+
         // inject namespaced methods
         for (const ns of namespaces) {
             this[ns] = {};
@@ -92,6 +119,15 @@ class Nomad {
                 this[ns][name] = method.bind(this);
             }
         }
+    }
+
+    /**
+     * Extract user most recent usage
+     *
+     * @returns {Array<RequestMetadata>}
+     */
+    debugInfo () {
+        return this.lastRequests;
     }
 
     /**
