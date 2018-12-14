@@ -38,10 +38,7 @@ describe("Nomad Client", function () {
 
         expect(newUser).to.be.an("object").to.include.all.keys(
             "id",
-            "email",
-            "username",
-            "first_name",
-            "last_name",
+            "token",
             "created_at",
             "updated_at"
         );
@@ -54,7 +51,6 @@ describe("Nomad Client", function () {
 
     describe("methods as a logged user", function () {
         const client = new Nomad();
-        let newUser = {};
 
         before(async () => {
             const isConnected = await client.login(account.username, account.password);
@@ -77,71 +73,6 @@ describe("Nomad Client", function () {
                 "created_at",
                 "updated_at"
             );
-        });
-
-        it("should create a new user", async function () {
-            const fakeUser = {
-                email: `dummy.user+${faker.random.uuid()}@nomadeducation.fr`,
-                password: faker.internet.password(),
-                first_name: faker.name.firstName(),
-                last_name: faker.name.lastName()
-            };
-
-            newUser = await client.user.create(fakeUser);
-
-            expect(newUser).to.be.an("object").that.have.any.keys(
-                "id",
-                "created_at",
-                "updated_at"
-            );
-        });
-
-        it("should test the existence of a new user", async function () {
-            const doesExists = await client.user.exists(newUser.id);
-
-            expect(doesExists).to.be.a("boolean").that.is.true;
-        });
-
-        it("should update the created user", async function () {
-            const fakeInfos = {
-                first_name: faker.name.firstName(),
-                last_name: faker.name.lastName()
-            };
-
-            const updated = await client.user.update(newUser.id, fakeInfos);
-
-            expect(updated).to.be.a("boolean").that.is.true;
-        });
-
-        it("should disable the created user", async function () {
-            const disabled = await client.user.disable(newUser.id);
-
-            expect(disabled).to.be.a("boolean").that.is.true;
-        });
-
-        it("should delete the created user", async function () {
-            const removed = await client.user.remove(newUser.id);
-
-            expect(removed).to.be.a("boolean").that.is.true;
-        });
-
-        it("should check that the user doesn't exist", async function () {
-            const userId = "42";
-            const doesExists = await client.user.exists(userId);
-
-            expect(doesExists).to.be.a("boolean").that.is.false;
-        });
-    });
-
-    describe("methods as a logged user using the API key", function () {
-        // XXX no need to login before
-        const {apiKey} = account;
-
-        it("should check that there are some users still there!", async function () {
-            const apiClient = new Nomad({api_key: apiKey});
-            const {count} = await apiClient.user.metadata();
-
-            expect(count).to.be.a("number").that.is.at.least(1);
         });
     });
 });
