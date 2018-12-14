@@ -112,7 +112,7 @@ class Nomad {
         // inject namespaced methods
         for (const ns of namespaces) {
             this[ns] = {};
-            const methods = require(`./${ns}`);
+            const methods = require(`./api/${ns}`);
             const methodMap = Object.entries(methods);
 
             for (const [name, method] of methodMap) {

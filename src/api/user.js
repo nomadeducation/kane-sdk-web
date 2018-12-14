@@ -1,20 +1,9 @@
 /**
- * Utility function to retrieve the number of found users
- *
- * @param {String} contentRangeHeader
- * @returns {Number}
- */
-function extractCount (contentRangeHeader) {
-    const countStr = contentRangeHeader.split("/");
-    return parseInt(countStr[1], 10);
-}
-
-/**
  * @returns {Promise<*>}
  */
 exports.metadata = async function () {
     const res = await this.api.head("/users");
-    const count = extractCount(res.headers["content-range"]);
+    const count = this.utils.extractCount(res.headers["content-range"]);
 
     return {
         maxItemsPerPage: 100,
@@ -75,6 +64,27 @@ exports.list = async function (offset = 0, limit = 100) {
 exports.update = async function (id, infos = {}) {
     const res = await this.api.patch(`/users/${id}`, infos);
     return res.status === 200;
+};
+
+/**
+ * @param {String} id
+ * @param {Array<String>} roleIds
+ * @returns {Promise<*>}
+ */
+exports.addRoles = async function (id, roleIds) {
+    const res = await this.api.patch(`/users/${id}/add-roles`, roleIds);
+    // XXX return an object containing 2 lists: "accepted" and "rejected"
+    return res.data;
+};
+
+/**
+ * @param {String} id
+ * @param {Array<String>} roleIds
+ * @returns {Promise<*>}
+ */
+exports.removeRoles = async function (id, roleIds) {
+    const res = await this.api.patch(`/users/${id}/remove-roles`, roleIds);
+    return res.data;
 };
 
 /**

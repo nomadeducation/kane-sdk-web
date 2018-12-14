@@ -22,17 +22,15 @@ module.exports = function setCommonConfig (env, apiUrl) {
     // there's no "test" mode in webpack
     const mode = isProd ? env : "development";
 
-    // fetch all namespaces
+    // fetch all API namespaces
     // do not create subfolder for the production build
-    const srcPath = path.resolve(__dirname, "..", "src");
-    const files = readdirSync(srcPath);
+    const apiPath = path.resolve(__dirname, "..", "src", "api");
+    const files = readdirSync(apiPath);
     const namespaces = [];
 
     for (const file of files) {
-        if (file !== "index.js") {
-            const {name} = path.parse(file);
-            namespaces.push(name);
-        }
+        const {name} = path.parse(file);
+        namespaces.push(name);
     }
 
     const buildPath = path.resolve(__dirname, "..", "dist");
