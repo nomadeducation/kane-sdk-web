@@ -1,6 +1,7 @@
 const axios = require("axios");
 const {default: axiosCookieJarSupport} = require("axios-cookiejar-support");
 const Agent = require("agentkeepalive");
+const utils = require("./utils");
 
 // axios can now handle cookies (Node.js only)
 if (__TARGET__ === "node") {
@@ -108,6 +109,9 @@ class Nomad {
 
             return response;
         });
+
+        // inject utility functions
+        this.utils = utils;
 
         // inject namespaced methods
         for (const ns of namespaces) {
