@@ -45,7 +45,7 @@ describe("Nomad Client", function () {
 
         // remove the dummy user afterwards
         const apiClient = new Nomad({api_key: account.apiKey});
-        const removed = await apiClient.user.remove(newUser.id);
+        const removed = await apiClient.users.remove(newUser.id);
         expect(removed).to.be.a("boolean").that.is.true;
     });
 

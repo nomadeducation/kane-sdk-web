@@ -27,7 +27,7 @@ describe("User", function () {
                 last_name: faker.name.lastName()
             };
 
-            newUser = await client.user.create(fakeUser);
+            newUser = await client.users.create(fakeUser);
 
             expect(newUser).to.be.an("object").that.include.all.keys(
                 "id",
@@ -37,7 +37,7 @@ describe("User", function () {
         });
 
         it("should test the existence of the new user", async function () {
-            const doesExists = await client.user.exists(newUser.id);
+            const doesExists = await client.users.exists(newUser.id);
 
             expect(doesExists).to.be.a("boolean").that.is.true;
         });
@@ -48,26 +48,26 @@ describe("User", function () {
                 last_name: faker.name.lastName()
             };
 
-            const updated = await client.user.update(newUser.id, fakeInfos);
+            const updated = await client.users.update(newUser.id, fakeInfos);
 
             expect(updated).to.be.a("boolean").that.is.true;
         });
 
         it("should disable the created user", async function () {
-            const disabled = await client.user.disable(newUser.id);
+            const disabled = await client.users.disable(newUser.id);
 
             expect(disabled).to.be.a("boolean").that.is.true;
         });
 
         it("should delete the created user", async function () {
-            const removed = await client.user.remove(newUser.id);
+            const removed = await client.users.remove(newUser.id);
 
             expect(removed).to.be.a("boolean").that.is.true;
         });
 
         it("should check that the user doesn't exist", async function () {
             const userId = "42";
-            const doesExists = await client.user.exists(userId);
+            const doesExists = await client.users.exists(userId);
 
             expect(doesExists).to.be.a("boolean").that.is.false;
         });
@@ -79,7 +79,7 @@ describe("User", function () {
 
         it("should check that there are some users still there!", async function () {
             const apiClient = new Nomad({api_key: apiKey});
-            const {count} = await apiClient.user.metadata();
+            const {count} = await apiClient.users.metadata();
 
             expect(count).to.be.a("number").that.is.at.least(1);
         });

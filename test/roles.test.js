@@ -25,7 +25,7 @@ describe("Role", function () {
             description: faker.lorem.lines()
         };
 
-        newRole = await client.role.create(fakeRole);
+        newRole = await client.roles.create(fakeRole);
 
         expect(newRole).to.be.an("object").that.include.all.keys(
             "id",
@@ -35,7 +35,7 @@ describe("Role", function () {
     });
 
     it("should test the existence of the new role", async function () {
-        const doesExists = await client.role.exists(newRole.id);
+        const doesExists = await client.roles.exists(newRole.id);
 
         expect(doesExists).to.be.a("boolean").that.is.true;
     });
@@ -46,25 +46,25 @@ describe("Role", function () {
             description: faker.lorem.lines()
         };
 
-        const updated = await client.role.update(newRole.id, fakeInfos);
+        const updated = await client.roles.update(newRole.id, fakeInfos);
 
         expect(updated).to.be.a("boolean").that.is.true;
     });
 
     it("should list permissions of the created role", async function () {
-        const perms = await client.role.listPermissions(newRole.id);
+        const perms = await client.roles.listPermissions(newRole.id);
 
         expect(perms).to.be.an("array").that.is.empty;
     });
 
     it("should delete the created role", async function () {
-        const removed = await client.role.remove(newRole.id);
+        const removed = await client.roles.remove(newRole.id);
 
         expect(removed).to.be.a("boolean").that.is.true;
     });
 
     it("should check that the role doesn't exist", async function () {
-        const doesExists = await client.role.exists(newRole.id);
+        const doesExists = await client.roles.exists(newRole.id);
 
         expect(doesExists).to.be.a("boolean").that.is.false;
     });

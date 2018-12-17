@@ -18,7 +18,7 @@ describe("Permission", function () {
     });
 
     it("should check that there're existing permissions", async function () {
-        const infos = await client.permission.metadata();
+        const infos = await client.permissions.metadata();
 
         expect(infos).to.be.an("object").that.have.all.keys(
             "count",
@@ -28,7 +28,7 @@ describe("Permission", function () {
     });
 
     it("should list existing permissions", async function () {
-        const perms = await client.permission.list();
+        const perms = await client.permissions.list();
 
         expect(perms).to.be.an("array").to.have.lengthOf.above(1);
         onePermission = perms[0];
@@ -39,7 +39,7 @@ describe("Permission", function () {
     });
 
     it("should get infos about the fetched permission", async function () {
-        const perm = await client.permission.get(onePermission.id);
+        const perm = await client.permissions.get(onePermission.id);
 
         expect(perm).to.be.an("object").that.include.all.keys(
             "id",
@@ -49,7 +49,7 @@ describe("Permission", function () {
     });
 
     it("should check that a dummy permission doesn't exist", async function () {
-        const doesExists = await client.permission.exists("42");
+        const doesExists = await client.permissions.exists("42");
 
         expect(doesExists).to.be.a("boolean").that.is.false;
     });
