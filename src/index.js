@@ -144,7 +144,7 @@ class Nomad {
      * @throws {Error} if the given credentials aren't valid
      */
     async login (username, password, extendedSession = false) {
-        const res = await this.api.post("/login", {
+        const res = await this.api.post("/auth/login", {
             username,
             password,
             extended_session: extendedSession
@@ -158,7 +158,7 @@ class Nomad {
      * @returns {Promise<*>}
      */
     async me () {
-        const res = await this.api.get("/me");
+        const res = await this.api.get("/auth/me");
         return res.data;
     }
 
@@ -168,7 +168,7 @@ class Nomad {
      * @returns {Promise<Boolean>} true if you're successfully logged out of the system
      */
     async logout () {
-        const res = await this.api.get("/logout");
+        const res = await this.api.get("/auth/logout");
         return res.status === 200;
     }
 
@@ -179,7 +179,7 @@ class Nomad {
      * @returns {Promise<*>}
      */
     static async register (user) {
-        const res = await axios.post(__GATEWAY_URL__ + "/register", user);
+        const res = await axios.post(__GATEWAY_URL__ + "/auth/register", user);
         return res.data;
     }
 
