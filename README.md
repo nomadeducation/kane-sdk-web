@@ -63,12 +63,12 @@ Check the [documentation](https://docs.nomadeducation.com/?language=JavaScript) 
 
 ### Testing
 
-Prerequisites: you'll have to add your API key (Travis CI will use the "test" account):
+Prerequisites: you'll have to add your API key (Travis CI will use the production account of the "test" user):
 ```bash
 echo '{"username": "test", "password": "TEST_PW", "apiKey": "TEST_TOKEN"}' > test/account.json
 ```
 
-Do **not** forget to launch Kane APIs locally before testing!
+Do **not** forget to launch the Kane API locally before testing!
 
 Then execute the following commands to test the SDK:
 ```bash
@@ -83,7 +83,7 @@ yarn test:dev
 
 You can also invoke the debugger. It'll wait on the first line while you're not attached:
 ```bash
-# you can debug either using the production...
+# you can debug either using the production env...
 yarn test:debug
 # ...or locally!
 yarn test:dev:debug
