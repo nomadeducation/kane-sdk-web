@@ -74,3 +74,15 @@ exports.remove = async function (id) {
     const res = await this.api.delete(`/media/${id}`);
     return res.status === 200;
 };
+
+/**
+ * Make sure that you've identified each of your item with an appropriate identifier
+ * stored in a "imported_id" key
+ *
+ * @param {Array<Object>} values
+ * @returns {Promise<*>} Inserted elements will be returned
+ */
+exports.import = async function (values) {
+    const res = await this.api.post("/media/import", values);
+    return res.status === 200;
+};
