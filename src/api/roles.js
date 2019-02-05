@@ -51,7 +51,7 @@ exports.list = async function (offset = 0, limit = 100) {
         }
     });
 
-    // XXX extract the total of found users
+    // XXX extract the total of found roles
 
     return res.data;
 };
@@ -82,7 +82,6 @@ exports.update = async function (id, infos = {}) {
  */
 exports.addPermissions = async function (id, permissionIds) {
     const res = await this.api.patch(`/roles/${id}/add-permissions`, permissionIds);
-    // XXX return an object containing 2 lists: "accepted" and "rejected"
     return res.data;
 };
 

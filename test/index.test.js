@@ -18,12 +18,13 @@ describe("Nomad Client", function () {
         const expectedKeys = [
             "version",
             "cache",
-            "internal_apis"
+            "db",
+            "db_schema"
         ];
 
         const status = await Nomad.health();
 
-        expect(status).to.be.an("object").to.include.keys(...expectedKeys);
+        expect(status).to.be.an("object").to.include.any.keys(...expectedKeys);
     });
 
     it("should register one user", async function () {

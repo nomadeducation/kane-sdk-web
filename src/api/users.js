@@ -73,7 +73,6 @@ exports.update = async function (id, infos = {}) {
  */
 exports.addRoles = async function (id, roleIds) {
     const res = await this.api.patch(`/users/${id}/add-roles`, roleIds);
-    // XXX return an object containing 2 lists: "accepted" and "rejected"
     return res.data;
 };
 
