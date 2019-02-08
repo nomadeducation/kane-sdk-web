@@ -82,6 +82,20 @@ class Nomad {
                 request.headers["Authorization"] = `Bearer ${apiKey}`;
             }
 
+            // prevent `null` properties from being sent as it'll break in the API validation stage
+            const data = request.data || {};
+            const properties = Object.keys(data);
+
+            if (properties.length > 0) {
+                for (const prop of properties) {
+                    const val = data[prop];
+
+                    if (val == null) {
+                        delete data[prop];
+                    }
+                }
+            }
+
             return request;
         });
 

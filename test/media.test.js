@@ -57,6 +57,17 @@ describe("Media", function () {
         expect(updated).to.be.a("boolean").that.is.true;
     });
 
+    it("should update the created media even with a `null` description", async function () {
+        const fakeInfos = {
+            name: `changed ${mediaName}`,
+            description: null
+        };
+
+        const updated = await client.media.update(newMedia.id, fakeInfos);
+
+        expect(updated).to.be.a("boolean").that.is.true;
+    });
+
     it("should delete the created media", async function () {
         const removed = await client.media.remove(newMedia.id);
 
