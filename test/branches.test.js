@@ -28,8 +28,7 @@ describe("Branch", function () {
 
         expect(newBranch).to.be.an("object").that.include.all.keys(
             "id",
-            "created_at",
-            "updated_at"
+            "created_at"
         );
     });
 

@@ -40,8 +40,7 @@ describe("Nomad Client", function () {
         expect(newUser).to.be.an("object").to.include.all.keys(
             "id",
             "token",
-            "created_at",
-            "updated_at"
+            "created_at"
         );
 
         // remove the dummy user afterwards
