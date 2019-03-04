@@ -92,7 +92,7 @@ exports.addOptions = async function (id, optionNames) {
  * @returns {Promise<*>}
  */
 exports.updateOption = async function (id, optionId, name) {
-    const res = await this.api.patch(`/studydomains/${id}/add-options`, {
+    const res = await this.api.patch(`/studydomains/${id}/update-option`, {
         id: optionId,
         name
     });
