@@ -2,7 +2,7 @@
  * @returns {Promise<*>}
  */
 exports.metadata = async function () {
-    const res = await this.api.head("/exams");
+    const res = await this.api.head("/nextyearchoices");
     const count = this.utils.extractCount(res.headers["content-range"]);
 
     return {
@@ -16,16 +16,16 @@ exports.metadata = async function () {
  * @returns {Promise<*>}
  */
 exports.exists = async function (id) {
-    const res = await this.api.head(`/exams/${id}`);
+    const res = await this.api.head(`/nextyearchoices/${id}`);
     return res.status === 200;
 };
 
 /**
- * @param {Object} exam
+ * @param {Object} nextYearChoice
  * @returns {Promise<*>}
  */
-exports.create = async function (exam = {}) {
-    const res = await this.api.post("/exams", exam);
+exports.create = async function (nextYearChoice = {}) {
+    const res = await this.api.post("/nextyearchoices", nextYearChoice);
     return res.data;
 };
 
@@ -34,7 +34,7 @@ exports.create = async function (exam = {}) {
  * @returns {Promise<*>}
  */
 exports.get = async function (id) {
-    const res = await this.api.get(`/exams/${id}`);
+    const res = await this.api.get(`/nextyearchoices/${id}`);
     return res.data;
 };
 
@@ -45,13 +45,13 @@ exports.get = async function (id) {
  */
 exports.list = async function (offset = 0, limit = 100) {
     const lastElement = offset + (limit - 1);
-    const res = await this.api.get("/exams", {
+    const res = await this.api.get("/nextyearchoices", {
         headers: {
             "Range": `items=${offset}-${lastElement}`
         }
     });
 
-    // XXX extract the total of found branches
+    // XXX extract the total of found resources
 
     return res.data;
 };
@@ -62,7 +62,7 @@ exports.list = async function (offset = 0, limit = 100) {
  * @returns {Promise<*>}
  */
 exports.update = async function (id, infos = {}) {
-    const res = await this.api.patch(`/exams/${id}`, infos);
+    const res = await this.api.patch(`/nextyearchoices/${id}`, infos);
     return res.status === 200;
 };
 
@@ -71,7 +71,7 @@ exports.update = async function (id, infos = {}) {
  * @returns {Promise<*>}
  */
 exports.remove = async function (id) {
-    const res = await this.api.delete(`/exams/${id}`);
+    const res = await this.api.delete(`/nextyearchoices/${id}`);
     return res.status === 200;
 };
 
@@ -83,6 +83,6 @@ exports.remove = async function (id) {
  * @returns {Promise<*>} Inserted elements will be returned
  */
 exports.import = async function (values) {
-    const res = await this.api.post("/exams/import", values);
+    const res = await this.api.post("/nextyearchoices/import", values);
     return res.status === 200;
 };
