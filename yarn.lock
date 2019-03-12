@@ -1435,10 +1435,10 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-config-nomadeducation@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-nomadeducation/-/eslint-config-nomadeducation-2.0.0.tgz#d1c54681a33ff6bbc520e2a257f0ff8aa0c04238"
-  integrity sha512-rh9Ij5FBva4evZAK3x2RljEnbDeqM6WvcgGp+35pmUc76Iw40e3V16CfemQLOLL9pkiOtUY9O7Xoj1qXQZSLRg==
+eslint-config-nomadeducation@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-nomadeducation/-/eslint-config-nomadeducation-2.0.2.tgz#e6f81a0892d02b797b5efa5b1f0b324ae45c3bbc"
+  integrity sha512-GzQxmTlOb1IiLlYt3j62YyW0PtQcKPB/mWmPV/X7YrGjCvwYCKSiN51g7LmyVyZQDqm0vZZyXpWegr0ULOVEsQ==
 
 eslint-scope@^4.0.0:
   version "4.0.0"
