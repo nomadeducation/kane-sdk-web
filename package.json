@@ -1,6 +1,6 @@
 {
   "name": "nomadeducation",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "author": "Nomad Education",
   "description": "Javascript SDK to interact with the Nomad Education API",
   "keywords": [
