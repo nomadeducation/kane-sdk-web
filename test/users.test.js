@@ -71,16 +71,4 @@ describe("User", function () {
             expect(doesExists).to.be.a("boolean").that.is.false;
         });
     });
-
-    describe("methods as a logged user using the API key", function () {
-        // XXX no need to login before
-        const {apiKey} = account;
-
-        it("should check that there are some users still there!", async function () {
-            const apiClient = new Nomad({api_key: apiKey});
-            const {count} = await apiClient.users.metadata();
-
-            expect(count).to.be.a("number").that.is.at.least(1);
-        });
-    });
 });

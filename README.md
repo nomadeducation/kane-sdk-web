@@ -63,9 +63,9 @@ Check the [documentation](https://docs.nomadeducation.com/?language=JavaScript) 
 
 ### Testing
 
-Prerequisites: you'll have to add your API key (Travis CI will use the production account of the "test" user):
+Prerequisites: you'll have to add your credentials (Travis CI will use the "test" account):
 ```bash
-echo '{"username": "test", "password": "TEST_PW", "apiKey": "TEST_TOKEN"}' > test/account.json
+echo '{"username": "test", "password": "TEST_PW"}' > test/account.json
 ```
 
 Do **not** forget to launch the Kane API locally before testing!
