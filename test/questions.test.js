@@ -20,12 +20,12 @@ describe("Questions", function () {
     });
 
     it("should create a new question", async function () {
-        const fakePost = {
+        const fakeQuestion = {
             title: questionName,
             content_type: "question"
         };
 
-        newQuestion = await client.questions.create(fakePost);
+        newQuestion = await client.questions.create(fakeQuestion);
 
         expect(newQuestion).to.be.an("object").that.include.all.keys(
             "id",
