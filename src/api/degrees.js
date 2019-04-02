@@ -21,11 +21,11 @@ exports.exists = async function (id) {
 };
 
 /**
- * @param {Object} branch
+ * @param {Object} degree
  * @returns {Promise<*>}
  */
-exports.create = async function (branch = {}) {
-    const res = await this.api.post("/degrees", branch);
+exports.create = async function (degree = {}) {
+    const res = await this.api.post("/degrees", degree);
     return res.data;
 };
 
@@ -51,7 +51,7 @@ exports.list = async function (offset = 0, limit = 100) {
         }
     });
 
-    // XXX extract the total of found branches
+    // XXX extract the total of found resources
 
     return res.data;
 };
