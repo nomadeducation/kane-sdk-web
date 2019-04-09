@@ -14,6 +14,61 @@ const sec = 1000; // in ms
 const MB = 1000 * 1000; // in bytes
 
 /**
+ * API Error Handler
+ *
+ * @typedef {Function} ApiErrorHandler
+ * @param {ApiError} err
+ */
+
+/**
+ * API Error Object
+ *
+ * @typedef {Object} ApiError
+ * @property {String} code
+ * @property {String} message
+ * @property {String} [details]
+ */
+
+/**
+ * This makes sure that we're working on the same object shape whatever the source of error
+ *
+ * @param {Object} err
+ * @returns {ApiError}
+ */
+function processApiError (err) {
+    const errObj = {
+        code: "",
+        message: "",
+        details: ""
+    };
+
+    if (err.response) {
+        // inject the error from the API
+        const {data} = err.response;
+
+        if (typeof data === "string") {
+            errObj.code = "BAD_RESPONSE";
+            errObj.message = data;
+        } else {
+            Object.assign(errObj, data);
+        }
+
+        // also inject the HTTP status
+        errObj.status = err.response.status;
+    } else if (err.request) {
+        errObj.code = "BAD_REQUEST";
+        errObj.message = "The request was made but no response was received";
+        errObj.details = err.message;
+    } else {
+        errObj.code = "UNEXPECTED";
+        errObj.message = "Something happened in setting up the request that triggered an error";
+        errObj.details = err.message;
+    }
+
+    return errObj;
+}
+
+/**
  * SDK Options.
  * If you give your "api_key" then you won't have to
  * login through your "username/password" credentials
@@ -23,7 +78,7 @@ const MB = 1000 * 1000; // in bytes
  * @property {String} [api_key]
  * @property {Boolean} [disable_timeout]
  * @property {Number} [latest_saved_request_ids] tell how much request ids is stored on the client for debugging purposes
- * @property {Function} [error_handler] Allow the user to customize how an error is treated
+ * @property {ApiErrorHandler} [error_handler] Allow the user to customize how an error is treated
  */
 const defaultOpts = {
     base_url: __GATEWAY_URL__,
@@ -136,7 +191,25 @@ class Nomad {
             const methodMap = Object.entries(methods);
 
             for (const [name, method] of methodMap) {
-                this[ns][name] = method.bind(this);
+                const catchedMethod = async function (...args) {
+                    try {
+                        return await method.apply(this, args);
+                    } catch (err) {
+                        const errObj = processApiError(err);
+
+                        // let the user handles the error
+                        this.opts.error_handler(errObj);
+                    }
+                };
+
+                const boundMethod = catchedMethod.bind(this);
+
+                // handle the special case of "auth" which can be called without a namespace
+                if (ns === "auth") {
+                    this[name] = boundMethod;
+                } else {
+                    this[ns][name] = boundMethod;
+                }
             }
         }
     }
