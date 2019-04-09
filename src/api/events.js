@@ -2,7 +2,7 @@
  * @returns {Promise<*>}
  */
 exports.metadata = async function () {
-    const res = await this.api.head("/campaigns");
+    const res = await this.api.head("/events");
     const count = this.utils.extractCount(res.headers["content-range"]);
 
     return {

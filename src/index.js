@@ -23,12 +23,14 @@ const MB = 1000 * 1000; // in bytes
  * @property {String} [api_key]
  * @property {Boolean} [disable_timeout]
  * @property {Number} [latest_saved_request_ids] tell how much request ids is stored on the client for debugging purposes
+ * @property {Function} [error_handler] Allow the user to customize how an error is treated
  */
 const defaultOpts = {
     base_url: __GATEWAY_URL__,
     api_key: "",
     disable_timeout: false,
-    latest_saved_requests: 10
+    latest_saved_requests: 10,
+    error_handler: (err) => console.error(err),
 };
 
 class Nomad {
