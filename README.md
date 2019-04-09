@@ -54,9 +54,9 @@ async function publicMethods () {
 
 // the library also exposes utility functions:
 // - determine the version used
-const version = Nomad.version();
+const version = client.version();
 // - monitor the API status
-const status = Nomad.health();
+const status = await client.health();
 ```
 
 ### Reference
