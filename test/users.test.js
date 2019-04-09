@@ -65,8 +65,7 @@ describe("User", function () {
         });
 
         it("should check that the user doesn't exist", async function () {
-            const userId = "42";
-            const doesExists = await client.users.exists(userId);
+            const doesExists = await client.users.exists(newUser.id);
 
             expect(doesExists).to.be.a("boolean").that.is.false;
         });

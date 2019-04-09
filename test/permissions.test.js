@@ -1,5 +1,6 @@
 const Nomad = require("dist/node");
 const account = require("./account");
+const faker = require("faker/locale/fr");
 const chai = require("chai");
 const expect = chai.expect;
 
@@ -49,7 +50,8 @@ describe("Permission", function () {
     });
 
     it("should check that a dummy permission doesn't exist", async function () {
-        const doesExists = await client.permissions.exists("42");
+        const fakeId = faker.random.uuid();
+        const doesExists = await client.permissions.exists(fakeId);
 
         expect(doesExists).to.be.a("boolean").that.is.false;
     });
