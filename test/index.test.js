@@ -6,7 +6,8 @@ const expect = chai.expect;
 
 describe("Nomad Client", function () {
     it("should retrieve the version", function () {
-        const version = Nomad.version();
+        const client = new Nomad();
+        const version = client.version();
 
         expect(version).to.be.an("object").to.include.keys(
             "version",
@@ -15,6 +16,7 @@ describe("Nomad Client", function () {
     });
 
     it("should monitor the API status", async function () {
+        const client = new Nomad();
         const expectedKeys = [
             "version",
             "cache",
@@ -22,12 +24,13 @@ describe("Nomad Client", function () {
             "db_schema"
         ];
 
-        const status = await Nomad.health();
+        const status = await client.health();
 
         expect(status).to.be.an("object").to.include.any.keys(...expectedKeys);
     });
 
     it("should register one user", async function () {
+        const client = new Nomad();
         const fakeUser = {
             email: `dummy.user+${faker.random.uuid()}@nomadeducation.fr`,
             password: faker.internet.password(),
@@ -35,7 +38,7 @@ describe("Nomad Client", function () {
             last_name: faker.name.lastName()
         };
 
-        const newUser = await Nomad.register(fakeUser);
+        const newUser = await client.register(fakeUser);
 
         expect(newUser).to.be.an("object").to.include.all.keys(
             "id",
@@ -44,7 +47,6 @@ describe("Nomad Client", function () {
         );
 
         // remove the dummy user afterwards
-        const client = new Nomad();
         const isConnected = await client.login(account.username, account.password);
         expect(isConnected).to.be.true;
         const removed = await client.users.remove(newUser.id);

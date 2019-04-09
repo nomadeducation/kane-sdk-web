@@ -204,8 +204,8 @@ class Nomad {
 
                 const boundMethod = catchedMethod.bind(this);
 
-                // handle the special case of "auth" which can be called without a namespace
-                if (ns === "auth") {
+                // handle special cases which can be called without a namespace (i.e. "auth" routes, "health")
+                if (ns === "global") {
                     this[name] = boundMethod;
                 } else {
                     this[ns][name] = boundMethod;
@@ -223,33 +223,11 @@ class Nomad {
         return this.lastRequests;
     }
 
-    /**
-     * register a user like the mobile app
-     *
-     * @param {Object} user
-     * @returns {Promise<*>}
-     */
-    static async register (user) {
-        const res = await axios.post(__GATEWAY_URL__ + "/auth/register", user);
-        return res.data;
-    }
-
-    static version () {
+    version () {
         return {
             version: __VERSION__,
             commit: __COMMITHASH__
         };
-    }
-
-    /**
-     * Monitor the API status by calling this function
-     * It should return at least the running "version"
-     *
-     * @returns {Promise<Object>}
-     */
-    static async health () {
-        const res = await axios.get(__GATEWAY_URL__ + "/health");
-        return res.data;
     }
 }
 

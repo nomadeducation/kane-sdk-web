@@ -35,3 +35,25 @@ exports.logout = async function () {
     const res = await this.api.get("/auth/logout");
     return res.status === 200;
 };
+
+/**
+ * register a user like the mobile app
+ *
+ * @param {Object} user
+ * @returns {Promise<*>}
+ */
+exports.register = async function (user) {
+    const res = await this.api.post("/auth/register", user);
+    return res.data;
+};
+
+/**
+ * Monitor the API status by calling this function
+ * It should return at least the running "version"
+ *
+ * @returns {Promise<Object>}
+ */
+exports.health = async function () {
+    const res = await this.api.get("/health");
+    return res.data;
+};
