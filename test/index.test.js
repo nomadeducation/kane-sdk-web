@@ -78,4 +78,20 @@ describe("Nomad Client", function () {
             );
         });
     });
+
+    describe("Error handling", function () {
+        it("should execute the handler when requesting an unreachable resource", async function () {
+            const client = new Nomad({
+                error_handler (err) {
+                    expect(err).to.be.an("object").that.have.any.keys(
+                        "code",
+                        "message",
+                        "details"
+                    );
+                }
+            });
+
+            await client.me();
+        });
+    });
 });
