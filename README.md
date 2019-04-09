@@ -34,7 +34,9 @@ const client = new Nomad({
     // Note that you won't have to log into our system then
     api_key: "d6921bc91cd2470e6a265974d4d9c47a",
     // sometimes your request can take more time than estimated
-    disable_timeout: true
+    disable_timeout: true,
+    // you can set your own error handler that'll be triggered with the argument
+    error_handler: (err) => console.log(err.code, err.message, err.details),
 });
 
 async function publicMethods () {
