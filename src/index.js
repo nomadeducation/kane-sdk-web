@@ -109,7 +109,7 @@ class Nomad {
             },
             // consider 4xx errors as valid responses
             validateStatus: function (status) {
-                return status >= 200 && status < 500;
+                return status >= 200 && status < 400;
             },
             // increase the allowed timeout
             timeout: (this.opts.disable_timeout || process.env.NODE_ENV !== "production") ? 0 : 3 * sec,
